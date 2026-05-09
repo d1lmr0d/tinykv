@@ -50,8 +50,6 @@ func (d *peerMsgHandler) HandleRaftReady() {
 		return
 	}
 	rd := d.RaftGroup.Ready()
-	log.Debugf("%s HandleRaftReady: entries=%d committed=%d msgs=%d softState=%v hardState=%v",
-		d.Tag, len(rd.Entries), len(rd.CommittedEntries), len(rd.Messages), rd.SoftState, rd.HardState)
 	if _, err := d.peerStorage.SaveReadyState(&rd); err != nil {
 		log.Errorf("%s save ready state error %v", d.Tag, err)
 		return
