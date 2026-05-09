@@ -38,7 +38,7 @@ func nextEnts(r *Raft, s *MemoryStorage) (ents []pb.Entry) {
 	s.Append(r.RaftLog.unstableEntries())
 	r.RaftLog.stabled = r.RaftLog.LastIndex()
 
-	ents = r.RaftLog.nextEnts()
+	ents = r.RaftLog.nextEntries()
 	r.RaftLog.applied = r.RaftLog.committed
 	return ents
 }

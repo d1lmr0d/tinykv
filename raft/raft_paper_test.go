@@ -417,7 +417,7 @@ func TestLeaderCommitEntry2AB(t *testing.T) {
 		t.Errorf("committed = %d, want %d", g, li+1)
 	}
 	wents := []pb.Entry{{Index: li + 1, Term: 1, Data: []byte("some data")}}
-	if g := r.RaftLog.nextEnts(); !reflect.DeepEqual(g, wents) {
+	if g := r.RaftLog.nextEntries(); !reflect.DeepEqual(g, wents) {
 		t.Errorf("nextEnts = %+v, want %+v", g, wents)
 	}
 	msgs := r.readMessages()
@@ -502,7 +502,7 @@ func TestLeaderCommitPrecedingEntries2AB(t *testing.T) {
 
 		li := uint64(len(tt))
 		wents := append(tt, pb.Entry{Term: 3, Index: li + 1}, pb.Entry{Term: 3, Index: li + 2, Data: []byte("some data")})
-		if g := r.RaftLog.nextEnts(); !reflect.DeepEqual(g, wents) {
+		if g := r.RaftLog.nextEntries(); !reflect.DeepEqual(g, wents) {
 			t.Errorf("#%d: ents = %+v, want %+v", i, g, wents)
 		}
 	}
@@ -557,7 +557,7 @@ func TestFollowerCommitEntry2AB(t *testing.T) {
 		for _, ent := range tt.ents[:int(tt.commit)] {
 			wents = append(wents, *ent)
 		}
-		if g := r.RaftLog.nextEnts(); !reflect.DeepEqual(g, wents) {
+		if g := r.RaftLog.nextEntries(); !reflect.DeepEqual(g, wents) {
 			t.Errorf("#%d: nextEnts = %v, want %v", i, g, wents)
 		}
 	}
